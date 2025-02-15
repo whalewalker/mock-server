@@ -56,7 +56,7 @@ mock-server/
 ## **Getting Started**
 ### **Prerequisites**
 Ensure you have the following installed:
-- **Java 17+**
+- **Java 21+**
 - **Maven**
 - **Docker** (Optional, for running services in containers)
 - **PostgreSQL** (Database used in this project)
@@ -67,24 +67,24 @@ Ensure you have the following installed:
 git clone https://github.com/whalewalker/mock-server.git
 cd mock-server
 ```
-2. **Set Up the Database**
+2. **Set Up the Database (Based on the service you're working on)**
 Ensure PostgreSQL is running and create a database:
 ```sql
-CREATE DATABASE mock_server;
+CREATE DATABASE mock_service;
 ```
 3. **Configure Environment Variables**
 Create an `.env` file in the root directory with the following:
 ```env
-DB_URL=jdbc:postgresql://localhost:5432/mock_server
+DB_URL=jdbc:postgresql://localhost:5432/mock_service
 DB_USERNAME=your_db_username
 DB_PASSWORD=your_db_password
 ```
 4. **Build and Run the Project**
 ```bash
 mvn clean install
-mvn spring-boot:run -pl mock-api-service
+mvn spring-boot:run -pl mock-service
 ```
-Replace `mock-api-service` with the module you want to run.
+Replace `mock-service` with the module you want to run.
 
 ---
 
