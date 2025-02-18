@@ -43,5 +43,6 @@
   <modules>
     <module>mock-service</module>
     <module>eureka-server</module>
+    <module>gateway-api-service</module>
   </modules>
 </project>

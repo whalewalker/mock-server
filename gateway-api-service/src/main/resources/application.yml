@@ -1,0 +1,38 @@
+server:
+  port: 8881
+spring:
+  application:
+    name: GATEWAY-SERVICE
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: ${ALLOWED_ORIGINS:http://localhost:8761,http://localhost:8081}
+            allowedHeaders:
+              - Content-Type
+              - Authorization
+            exposedHeaders:
+              - Content-Type
+              - Authorization
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVICE:http://localhost:8761/eureka}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
