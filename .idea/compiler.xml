@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="mock-service" />
         <module name="eureka-server" />
+        <module name="gateway-api-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -20,6 +21,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="eureka-server" options="-parameters" />
+      <module name="gateway-api-service" options="-parameters" />
       <module name="mock-server" options="" />
       <module name="mock-server-api" options="-parameters" />
       <module name="mock-server-core" options="-parameters" />
