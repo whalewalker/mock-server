@@ -44,8 +44,8 @@
     <module>mock-service</module>
     <module>eureka-server</module>
     <module>gateway-api-service</module>
+    <module>auth-service</module>
   </modules>
-
   <build>
     <plugins>
       <plugin>

@@ -1,13 +1,13 @@
 server:
-  port: 8881
+  port: ${SERVER_PORT:8082}
 spring:
   application:
-    name: GATEWAY-SERVICE
+    name: api-gateway-service
   cloud:
     discovery:
       enabled: true
     gateway:
-      globalcors:
+      globals:
         corsConfigurations:
           '[/**]':
             allowedOrigins: ${ALLOWED_ORIGINS:http://localhost:8761,http://localhost:8081}
