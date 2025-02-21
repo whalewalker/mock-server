@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @Slf4j
 @Transactional
@@ -23,31 +25,35 @@ public class AuthService {
     public TokenResponse createTokenResponse(UserPrincipal userPrincipal) {
         String accessToken = tokenProvider.createToken(userPrincipal);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(userPrincipal.getId());
-        
+
         return TokenResponse.builder()
-            .accessToken(accessToken)
-            .refreshToken(refreshToken.getToken())
-            .tokenType("Bearer")
-            .expiresIn(tokenProvider.getJwtExpiration() / 1000)
-            .build();
+                .accessToken(accessToken)
+                .refreshToken(refreshToken.getToken())
+                .tokenType("Bearer")
+                .expiresIn(tokenProvider.getJwtExpiration() / 1000)
+                .build();
     }
-    
+
     public TokenResponse refreshToken(String refreshToken) {
         return refreshTokenService.getByToken(refreshToken)
-            .map(token -> {
-                if (refreshTokenService.verifyExpiration(token)) {
-                    UserPrincipal userPrincipal = UserPrincipal.create(token.getUser());
-                    String accessToken = tokenProvider.createToken(userPrincipal);
-                    
-                    return TokenResponse.builder()
-                        .accessToken(accessToken)
-                        .refreshToken(token.getToken())
-                        .tokenType("Bearer")
-                        .expiresIn(tokenProvider.getJwtExpiration() / 1000)
-                        .build();
-                }
-                throw new RequestIsBadException("Refresh token expired");
-            })
-            .orElseThrow(() -> new ResourceNotFoundException("Refresh token not found"));
+                .map(token -> {
+                    if (refreshTokenService.verifyExpiration(token)) {
+                        UserPrincipal userPrincipal = UserPrincipal.create(token.getUser());
+                        String accessToken = tokenProvider.createToken(userPrincipal);
+
+                        return TokenResponse.builder()
+                                .accessToken(accessToken)
+                                .refreshToken(token.getToken())
+                                .tokenType("Bearer")
+                                .expiresIn(tokenProvider.getJwtExpiration() / 1000)
+                                .build();
+                    }
+                    throw new RequestIsBadException("Refresh token expired");
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("Refresh token not found"));
+    }
+
+    public void revokeTokens(UUID id) {
+        refreshTokenService.deleteByUserId(id);
     }
 }

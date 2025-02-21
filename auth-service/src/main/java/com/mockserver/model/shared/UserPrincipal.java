@@ -44,7 +44,7 @@ public class UserPrincipal implements UserDetails, OAuth2User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
-                .map(role -> (GrantedAuthority) role::getName)
+                .map(GrantedAuthority.class::cast)
                 .collect(Collectors.toSet());
     }
 
