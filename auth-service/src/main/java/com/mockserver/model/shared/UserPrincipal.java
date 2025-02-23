@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
 import java.util.Map;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Builder
-public class UserPrincipal implements UserDetails, OAuth2User {
+public class UserPrincipal implements UserDetails{
 
     private UUID id;
     private String name;
@@ -73,17 +72,8 @@ public class UserPrincipal implements UserDetails, OAuth2User {
         return true;
     }
 
-    @Override
-    public Map<String, Object> getAttributes() {
-        return attributes;
-    }
 
     public void setAttributes(Map<String, Object> attributes) {
         this.attributes = attributes;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 }
